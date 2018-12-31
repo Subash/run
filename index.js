@@ -9,15 +9,15 @@ module.exports = function run(command, options = {}) {
     opts.shell = true;
 
     const cp = spawn(command, opts);
-    let stderr = '', stdout = '';
+    let stderr = Buffer.alloc(0), stdout = Buffer.alloc(0);
 
-    if(cp.stderr) cp.stderr.on('data', (data) => stderr = stderr + data.toString('utf-8'));
-    if(cp.stdout) cp.stdout.on('data', (data) => stdout = stdout + data.toString('utf-8'));
+    if(cp.stderr) cp.stderr.on('data', data => stderr = Buffer.concat([ stderr, data ]));
+    if(cp.stdout) cp.stdout.on('data', data => stdout = Buffer.concat([ stdout, data ]));
 
     cp.on('error', reject);
     cp.on('exit', (code)=> {
-      if(code === 0) return resolve(stdout);
-      reject(new Error(stderr || stdout || `Process exited with code ${code}`));
+      if(code === 0) return resolve(stdout.toString('utf-8'));
+      reject(new Error(stderr.toString('utf-8') || stdout.toString('utf-8') || `Process exited with code ${code}`));
     });
   });
 }
