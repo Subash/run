@@ -1,0 +1,9 @@
+{
+  "name": "@sbspk/run",
+  "description": "Run a command",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Subash/run",
+  "repository": "https://github.com/Subash/run",
+  "license": "MIT",
+  "main": "index.js"
+}
