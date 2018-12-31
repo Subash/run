@@ -8,7 +8,7 @@ module.exports = function run(command, options = {}) {
     opts.stdio = options.stdio || 'ignore';
     opts.shell = true;
 
-    const cp = child_process.spawn(command, opts);
+    const cp = spawn(command, opts);
     let stderr = '', stdout = '';
 
     if(cp.stderr) cp.stderr.on('data', (data) => stderr = stderr + data.toString('utf-8'));
