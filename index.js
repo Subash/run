@@ -1,14 +1,19 @@
 const { spawn } = require('child_process');
 
-module.exports = function run(command, options = {}) {
+module.exports = function run(command, args, options = {}) {
   return new Promise((resolve, reject)=> {
+    if(!Array.isArray(args)) {
+      options = args || options;
+      args = [];
+    }
+
     const opts = {};
     opts.cwd = options.cwd || process.cwd();
     opts.env = options.env || process.env;
     opts.stdio = options.stdio || 'pipe';
     opts.shell = true;
 
-    const cp = spawn(command, opts);
+    const cp = spawn(command, args, opts);
     let stderr = Buffer.alloc(0), stdout = Buffer.alloc(0);
 
     if(cp.stderr) cp.stderr.on('data', data => stderr = Buffer.concat([ stderr, data ]));
