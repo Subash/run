@@ -5,7 +5,7 @@ module.exports = function run(command, options = {}) {
     const opts = {};
     opts.cwd = options.cwd || process.cwd();
     opts.env = options.env || process.env;
-    opts.stdio = options.stdio || 'ignore';
+    opts.stdio = options.stdio || 'pipe';
     opts.shell = true;
 
     const cp = spawn(command, opts);
