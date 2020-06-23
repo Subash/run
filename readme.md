@@ -1,5 +1,3 @@
-### Run a command using child process
-
 ```javascript
 const run = require('@sbspk/run');
 
